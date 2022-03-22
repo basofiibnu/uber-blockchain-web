@@ -1,3 +1,5 @@
+import { useContext } from 'react';
+import { UberContext } from '../context/uberContext';
 import RideSelector from './RideSelector';
 
 const style = {
@@ -8,7 +10,28 @@ const style = {
 };
 
 const Confirm = () => {
-  const storeTripDetails = () => {};
+  const { currentAccount, pickup, dropoff, price, selectedRide } =
+    useContext(UberContext);
+
+  const storeTripDetails = async () => {
+    try {
+      await fetch('/api/db/saveTrips', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          pickupLocation: pickup,
+          dropoffLocation: dropoff,
+          userWalletAddress: currentAccount,
+          price: price,
+          selectedRide: selectedRide,
+        }),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className={style.wrapper}>

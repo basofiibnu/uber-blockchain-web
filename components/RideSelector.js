@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import Image from 'next/image';
 import ethLogo from '../assets/ethLogo.png';
+import { UberContext } from '../context/uberContext';
 
 const style = {
   wrapper: `h-full flex flex-col`,
@@ -20,13 +21,17 @@ const basePrice = 1542;
 
 const RideSelector = () => {
   const [carList, setCarList] = useState([]);
+  const { selectedRide, setSelectedRide, setPrice } =
+    useContext(UberContext);
 
   useEffect(() => {
     (async () => {
       try {
         const response = await fetch('/api/db/getRideType');
+
         const data = await response.json();
         setCarList(data.data);
+        setSelectedRide(data.data[0]);
       } catch (error) {
         console.log(error);
       }
@@ -40,7 +45,22 @@ const RideSelector = () => {
       </div>
       <div className={style.carList}>
         {carList.map((car, index) => (
-          <div className={style.car} key={index}>
+          <div
+            className={`${
+              selectedRide.service === car.service
+                ? style.selectedCar
+                : style.car
+            }`}
+            key={index}
+            onClick={() => {
+              setSelectedRide(car);
+              setPrice(
+                ((basePrice / 10 ** 5) * car.priceMultiplier).toFixed(
+                  5,
+                ),
+              );
+            }}
+          >
             <Image
               src={car.iconUrl}
               className={style.iconUrl}

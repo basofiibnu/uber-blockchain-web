@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import uberX from '../assets/rides/uberX.png';
-import uberBlack from '../assets/rides/uberBlack.png';
-import uberBlackSuv from '../assets/rides/uberBlackSuv.png';
-import uberSelect from '../assets/rides/uberSelect.png';
-import uberXL from '../assets/rides/uberXL.png';
 import ethLogo from '../assets/ethLogo.png';
 
 const style = {

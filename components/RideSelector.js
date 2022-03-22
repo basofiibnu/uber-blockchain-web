@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import uberX from '../assets/rides/uberX.png';
 import uberBlack from '../assets/rides/uberBlack.png';
@@ -21,37 +21,24 @@ const style = {
   price: `mr-[-0.8rem]`,
 };
 
-const carList = [
-  {
-    service: 'UberX',
-    iconUrl: uberX,
-    priceMultiplier: 1,
-  },
-  {
-    service: 'UberBlack',
-    iconUrl: uberBlack,
-    priceMultiplier: 1.5,
-  },
-  {
-    service: 'UberBlackSuv',
-    iconUrl: uberBlackSuv,
-    priceMultiplier: 1.7,
-  },
-  {
-    service: 'UberSelect',
-    iconUrl: uberSelect,
-    priceMultiplier: 1.8,
-  },
-  {
-    service: 'UberXL',
-    iconUrl: uberXL,
-    priceMultiplier: 1.9,
-  },
-];
-
 const basePrice = 1542;
 
 const RideSelector = () => {
+  const [carList, setCarList] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await fetch('/api/db/getRideType');
+        const data = await response.json();
+        setCarList(data.data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
+
   return (
     <div className={style.wrapper}>
       <div className={style.title}>

@@ -12,6 +12,7 @@ export const UberProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState('');
   const [price, setPrice] = useState('');
   const [selectedRide, setSelectedRide] = useState([]);
+  const [basePrice, setBasePrice] = useState();
 
   let metamask;
 
@@ -149,6 +150,29 @@ export const UberProvider = ({ children }) => {
     } else return;
   }, [pickup, dropoff]);
 
+  useEffect(() => {
+    if (!pickupCoordinates || !dropoffCoordinates) return;
+    (async () => {
+      try {
+        const response = await fetch('/api/map/getDuration', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            pickupCoordinates: `${pickupCoordinates[0]},${pickupCoordinates[1]}`,
+            dropoffCoordinates: `${dropoffCoordinates[0]},${dropoffCoordinates[1]}`,
+          }),
+        });
+
+        const data = await response.json();
+        setBasePrice(Math.round(await data.data));
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [pickupCoordinates, dropoffCoordinates]);
+
   return (
     <UberContext.Provider
       value={{
@@ -167,6 +191,8 @@ export const UberProvider = ({ children }) => {
         selectedRide,
         setSelectedRide,
         setPrice,
+        basePrice,
+        metamask,
       }}
     >
       {children}

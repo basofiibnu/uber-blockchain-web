@@ -7,7 +7,7 @@ const getLocationCoordinates = async (req, res) => {
 
     res
       .status(200)
-      .send({ message: 'success', data: data.feature[0].center });
+      .send({ message: 'success', data: data.features[0].center });
   } catch (error) {
     res.status(500).send({ message: 'error', data: error.message });
   }

@@ -15,7 +15,7 @@ export const UberProvider = ({ children }) => {
     return new Promise(async (resolve, reject) => {
       try {
         const response = await fetch(
-          'api/map/getLocationCoordinates',
+          '/api/db/getLocationCoordinate',
           {
             method: 'POST',
             headers: {
@@ -62,16 +62,16 @@ export const UberProvider = ({ children }) => {
 
   return (
     <UberContext.Provider
-      value={
-        (pickup,
+      value={{
+        pickup,
         setPickup,
         dropoff,
         setDropoff,
         pickupCoordinates,
         setPickupCoordinates,
         dropoffCoordinates,
-        setDropoffCoordinates)
-      }
+        setDropoffCoordinates,
+      }}
     >
       {children}
     </UberContext.Provider>

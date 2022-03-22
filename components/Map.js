@@ -22,7 +22,7 @@ const Map = () => {
     const map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/secondkyo/cl121pgyj000u14pbkeenvo5h',
-      center: [-99.965379, 39.637828],
+      center: [-90, 90],
       zoom: 3,
     });
 
@@ -32,9 +32,13 @@ const Map = () => {
     if (dropoffCoordinates) {
       addToMap(map, dropoffCoordinates);
     }
-  }, []);
 
-  console.log(pickupCoordinates, dropoffCoordinates);
+    if (pickupCoordinates && dropoffCoordinates) {
+      map.fitBounds([dropoffCoordinates, pickupCoordinates], {
+        padding: 200,
+      });
+    }
+  }, [pickupCoordinates, dropoffCoordinates]);
 
   return <div className={style.wrapper} id="map"></div>;
 };

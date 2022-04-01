@@ -1,3 +1,5 @@
+import Head from 'next/head';
+import { Fragment } from 'react/cjs/react.production.min';
 import Confirm from '../components/Confirm';
 import LocationSelector from '../components/LocationSelector';
 import Map from '../components/Map';
@@ -13,17 +15,23 @@ const style = {
 
 export default function Home() {
   return (
-    <div className={style.wrapper}>
-      <Navbar />
-      <div className={style.main}>
-        <Map />
-      </div>
-      <div className={style.rideRequestContainer}>
-        <div className={style.rideRequest}>
-          <LocationSelector />
-          <Confirm />
+    <Fragment>
+      <Head>
+        <title>Uber App - Portfolio</title>
+        <link rel="icon" href="/favicon.webp" />
+      </Head>
+      <div className={style.wrapper}>
+        <Navbar />
+        <div className={style.main}>
+          <Map />
+        </div>
+        <div className={style.rideRequestContainer}>
+          <div className={style.rideRequest}>
+            <LocationSelector />
+            <Confirm />
+          </div>
         </div>
       </div>
-    </div>
+    </Fragment>
   );
 }

@@ -10,6 +10,7 @@ const style = {
   svgContainer: `mx-1`,
   input: `my-2 rounded-2 p-2 outline-none border-none bg-transparent h-full w-full`,
   verticalLine: `w=0 h-[2rem] border-black border absolute z-10 left-[2.3rem] top-[2rem]`,
+  disclaimerText: `text-gray-400 flex items-center p-4 pb-0 text-xs`,
 };
 
 const LocationSelector = () => {
@@ -19,6 +20,10 @@ const LocationSelector = () => {
 
   return (
     <div className={style.wrapper}>
+      <div className={style.disclaimerText}>
+        *before use this, please login to your metamask/wallet
+        ethereum account
+      </div>
       <div className={style.searchHeader}>
         {inFocus === 'from'
           ? 'Where can we pick you up?'
